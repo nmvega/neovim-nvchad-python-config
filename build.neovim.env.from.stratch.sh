@@ -1,16 +1,16 @@
 #! /usr/bin/env bash
 
 HOME="/home/nmvega"
+
 # ==================================================================
-# The 'pyright' package is necessary. Install in into our uv .venvs.
+# IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT 
 # ==================================================================
-# ${HOME}$ deactivate && source ${HOME}/WOR*/pyvenv_*/.venv/bin/activate
-# ${HOME}$ cd ${HOME}/WOR*/pyvenv_*/
-# ${HOME}$ uv add pyright
-# ------------------------------------------------------------------
-# ${HOME}$ deactivate && source ${HOME}/WOR*/pyvenv.d/.venv/bin/activate
-# ${HOME}$ cd ${HOME}/WOR*/pyvenv.d/
-# ${HOME}$ uv add pyright
+# If the Python package - 'pyright(1)' command - is found in the
+# Bash PATH, the ":MasonInstallAll" command below will not install
+# it in neovim (and we always want it to)! So, temporarily deactivate(1)
+# the current Python 'venv', as well as 'dnf(1) remove pyright' (if
+# it exists). In the end, we're ensuring that the command -
+# nmvega$ which pyright - returns nothing prior to running this script.
 # ==================================================================
 
 
@@ -57,5 +57,14 @@ sed -i -e 's/"ruff_lsp"/"ruff"/' ${HOME}/.config/nvim/lua/custom/configs/lspconf
 # ==================================================================
 
 # ==================================================================
-mv ${HOME}/.git.$$ ${HOME}/.config/nvim/.git # Restore '.../.git' directory.
+# Step-5: Run these commands again.
+# ==================================================================
+/usr/bin/nvim -c "TSInstall python" -c "MasonInstallAll" # Make sure! Check w/: ':LspInfo'
+# ==================================================================
+
+# ==================================================================
+# Restore '.git/' sub-directory, as we as this (possibly) modified script.
+# ==================================================================
+mv ${HOME}/.git.$$ ${HOME}/.config/nvim/.git
+cp $(realpath "$0") ${HOME}/.config/nvim/
 # ==================================================================
