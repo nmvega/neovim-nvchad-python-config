@@ -20,7 +20,8 @@ HOME="/home/nmvega"
 cd ${HOME}
 [ x"${?}" != x"0" ] && echo "exit 1" && exit 1
 cp -rp ${HOME}/.config/nvim/.git ${HOME}/.git.$$ # Save & later restore '.../.git' directory.
-rm -rf ${HOME}/.config/nvim ${HOME}/.local/share/nvim ${HOME}/.local/state/nvim ${HOME}/neovim-python
+rm -rf ${HOME}/.cache/nvim ${HOME}/.local/share/nvim ${HOME}/.local/state/nvim ${HOME}/neovim-python
+rm -rf ${HOME}/.config/nvim
 # ==================================================================
 
 
@@ -66,5 +67,7 @@ sed -i -e 's/"ruff_lsp"/"ruff"/' ${HOME}/.config/nvim/lua/custom/configs/lspconf
 # Restore '.git/' sub-directory, as we as this (possibly) modified script.
 # ==================================================================
 mv ${HOME}/.git.$$ ${HOME}/.config/nvim/.git
-cp $(realpath "$0") ${HOME}/.config/nvim/
+(cd ${HOME}/.config/nvim/ && \
+   git remote set-url origin git@github.com:nmvega/neovim-nvchad-python-config.git)
+cp $(realpath "$0") ${HOME}/.config/nvim/ # Restore this script too.
 # ==================================================================
